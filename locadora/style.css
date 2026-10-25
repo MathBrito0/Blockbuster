@@ -1,0 +1,58 @@
+body {
+    background: blue;
+    text-align: center;
+    color:rgb(255, 238, 0);
+}
+
+
+.list {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    background-color: rgba(219, 101, 4, 0.767);
+    padding: 20px;
+    box-shadow: 4px 4px 8px black;
+    border-radius: 3px;
+    overflow-x: auto;
+}
+
+
+.list img {
+    width: 120px;
+    height: 180px;
+    background-color: rgba(216, 211, 208, 0.767);
+    padding: 20px;
+    padding-top: 20%;
+    box-shadow: 4px 4px 8px black;
+    border-radius: 3px;
+}
+
+.movie {
+    transition: transform 0.2s;
+}
+
+.movie:hover {
+    transform: translateY(-10px) scale(1.1);
+}
+
+.tag {
+    text-align: center;
+    background: rgb(243, 243, 134);
+    color: skyblue;
+}
+
+.ficha {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    padding: 20px;
+    background: #0a1f5c;
+    color: #ffd700;
+    border-radius: 8px;
+    box-shadow: 4px 4px 8px black;
+    z-index: 10;
+    display: none;
+}
+
