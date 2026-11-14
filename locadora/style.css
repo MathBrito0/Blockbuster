@@ -1,58 +1,477 @@
+/* =======================================
+    1. ORGANIZAÇÃO GLOBAL E VARIÁVEIS
+   ======================================= */
+
+:root {
+    --bg-primary: #070d1b;
+    --bg-secondary: #0f1d36;
+    --color-yellow: #ffcc00;
+    --color-yellow-hover: #ffd700;
+    --text-white: #ffffff;
+    --text-muted: #a0aec0;
+}
+
 body {
-    background: blue;
-    text-align: center;
-    color:rgb(255, 238, 0);
+    background-color: var(--bg-primary);
+    color: var(--text-white);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 
+
+/* =======================================
+    2. BARRA DE NAVEGAÇÃO E LOGO
+   ======================================= */
+
+
+
+.navbar {
+    background-color: rgba(15, 29, 54, 0.9);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-sizing: border-box;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 204, 0, 0.2);
+}
+
+.navbar .user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+}
+
+.navbar .btn-sair {
+    background-color: transparent;
+    border: 2px solid var(--color-yellow);
+    color: var(--color-yellow);
+    padding: 6px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.navbar .btn-sair:hover {
+    background-color: var(--color-yellow);
+    color: var(--bg-primary);
+}
+
+
+/* Logo no Estilo Retrô */
+
+.logo {
+    font-size: 20px;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--color-yellow);
+    background-color: #001f5b;
+    padding: 6px 14px;
+    border: 2px solid var(--color-yellow);
+    border-radius: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+
+/* =======================================
+    3. TELA DE LOGIN E CADASTRO
+   ======================================= */
+
+
+
+.auth-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-container {
+    background-color: var(--bg-secondary);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    border: 1px solid rgba(255, 204, 0, 0.1);
+}
+
+.auth-container h1 {
+    color: var(--color-yellow);
+    margin-top: 0;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+}
+
+.auth-container h2 {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+.campo {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.campo input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--bg-primary);
+    border: 1px solid #233554;
+    color: var(--text-muted);
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: var(--color-yellow);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-yellow);
+    color: var(--bg-primary);
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-yellow-hover);
+    transform: translateY(-1px);
+}
+
+.mensagem {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.link-alternativo {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.link-alternativo a {
+    color: var(--color-yellow);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link-alternativo a:hover {
+    text-decoration: underline;
+}
+
+
+/* =======================================
+    4. CATÁLOGO E PRATILEIRAS
+   ======================================= */
+
+
+
+.catalogo-container {
+    padding: 100px 40px 40px 40px;
+}
+
+.prateleira {
+    margin-bottom: 40px;
+}
+
+.prateleira h3 {
+    font-size: 18px;
+    color: var(--color-yellow);
+    border-left: 4px solid var(--color-yellow);
+    padding-left: 10px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* Carrosséis */
+
+.filmes-lista,
 .list {
     display: flex;
-    list-style: none;
-    gap: 10px;
-    background-color: rgba(219, 101, 4, 0.767);
-    padding: 20px;
-    box-shadow: 4px 4px 8px black;
-    border-radius: 3px;
+    gap: 20px;
     overflow-x: auto;
+    padding: 0 0 15px 0;
+    margin: 0;
+    list-style: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-yellow) var(--bg-secondary);
+}
+
+.filmes-lista::-webkit-scrollbar,
+.list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.filmes-lista::-webkit-scrollbar-thumb,
+.list::-webkit-scrollbar-thumb {
+    background-color: var(--color-yellow);
+    border-radius: 4px;
 }
 
 
-.list img {
-    width: 120px;
-    height: 180px;
-    background-color: rgba(216, 211, 208, 0.767);
-    padding: 20px;
-    padding-top: 20%;
-    box-shadow: 4px 4px 8px black;
-    border-radius: 3px;
+/* =======================================
+    5. CAIXAS EM 3D
+   ======================================= */
+
+
+
+.dvd-case,
+.movie,
+.filme-card {
+    position: relative;
+    flex: 0 0 150px !important;
+    width: 150px !important;
+    height: 220px !important;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: var(--bg-secondary);
+
+    box-shadow: 12px 15px 30px rgba(0, 0, 0, 0.7),
+                -3px 0px 8px rgba(255, 255, 255, 0.15) inset;
+
+    transform: perspective(900px) rotateY(-12deg);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
 }
 
-.movie {
-    transition: transform 0.2s;
+.dvd-case:hover,
+.movie:hover,
+.filme-card:hover {
+    transform: perspective(900px) rotateY(0deg) scale(1.06) translateY(-5px);
+    box-shadow: 5px 20px 40px rgba(255, 204, 0, 0.35),
+                -3px 0px 10px rgba(255, 255, 255, 0.3) inset;
+    
+    z-index: 10;
 }
 
-.movie:hover {
-    transform: translateY(-10px) scale(1.1);
+.dvd-case img,
+.movie img,
+.filme-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
 }
 
-.tag {
-    text-align: center;
-    background: rgb(243, 243, 134);
-    color: skyblue;
+.plastic-shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%);
+    pointer-events: none;
 }
+
+
+/* =======================================
+    6. INFORMAÇÕES DO FILME
+   ======================================= */
+
+
 
 .ficha {
+    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 350px;
-    padding: 20px;
-    background: #0a1f5c;
-    color: #ffd700;
-    border-radius: 8px;
-    box-shadow: 4px 4px 8px black;
-    z-index: 10;
-    display: none;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--color-yellow);
+    padding: 30px;
+    border-radius: 12px;
+    width: 650px;
+    max-width: 95%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    z-index: 3000;
+    box-sizing: border-box;
+    
+    /* Layout de duas colunas */
+    gap: 25px;
+    align-items: flex-start;
 }
 
+.ficha-esquerda {
+    flex-shrink: 0;
+}
+
+/* Capa menorzinha dentro da ficha com leve toque 3D */
+.ficha-esquerda .dvd-case {
+    width: 140px;
+    height: 200px;
+    transform: perspective(800px) rotateY(-5deg);
+    box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.6),
+                -2px 0px 6px rgba(255, 255, 255, 0.15) inset;
+    margin: 0;
+    float: none;
+}
+
+.ficha-direita {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ficha-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+}
+
+.ficha-cabecalho h2 {
+    color: var(--color-yellow);
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+/* Selo de Classificação Indicativa Padrão Brasileiro */
+.classificacao-selo {
+    font-weight: 900;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+    min-width: 24px;
+    display: inline-block;
+}
+.selo-L { background-color: #27ae60; color: #fff; }
+.selo-10 { background-color: #2980b9; color: #fff; }
+.selo-12 { background-color: #f1c40f; color: #000; }
+.selo-14 { background-color: #e67e22; color: #fff; }
+.selo-16 { background-color: #c0392b; color: #fff; }
+.selo-18 { background-color: #1a1a1a; color: #fff; border: 1px solid #555; }
+
+.ficha-sinopse-texto {
+    color: var(--text-white);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.ficha-detalhes p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.ficha-detalhes strong {
+    color: var(--color-yellow);
+    font-size: 11px;
+    letter-spacing: 1px;
+    display: inline-block;
+    width: 75px;
+}
+
+.ficha-detalhes span {
+    color: var(--text-white);
+}
+
+.ficha-rodape {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Etiqueta de Preço Estilo Locadora */
+.preco-etiqueta {
+    background-color: var(--color-yellow);
+    color: var(--bg-primary);
+    font-weight: 900;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+    letter-spacing: 0.5px;
+}
+
+.ficha-botoes {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-alugar {
+    background-color: var(--color-yellow);
+    color: var(--bg-primary);
+    border: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-alugar:hover {
+    background-color: var(--color-yellow-hover);
+}
+
+.btn-fechar {
+    background-color: transparent;
+    color: var(--text-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-fechar:hover {
+    border-color: var(--color-yellow);
+    color: var(--color-yellow);
+}
+
+
+.auth-container .logo {
+    margin-bottom: 15px;
+}
