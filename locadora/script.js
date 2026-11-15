@@ -16,6 +16,11 @@ let prateleiraAnime = document.getElementById("prateleira-anime");
 let prateleiraAcao = document.getElementById("prateleira-acao");
 let prateleiraFiccao = document.getElementById("prateleira-ficcao");
 let prateleiraOutros = document.getElementById("prateleira-outros");
+let btnAlugar = document.getElementById("btn-alugar");
+let btnDevolver = document.getElementById("btn-devolver");
+let mensagemAluguel = document.getElementById("mensagem-aluguel");
+let somenteAlugados = document.body.classList.contains("pagina-alugados");
+let filmeAtual = "";
 
 if (botao) {
     botao.addEventListener("click", function() {
@@ -23,54 +28,56 @@ if (botao) {
     });
 }
 
-btnNovoFilme.addEventListener("click", function() {
-    ficha.style.display = "none";
-    mensagemFilme.textContent = "";
-    fichaNovoFilme.style.display = "flex";
-});
+if (btnNovoFilme) {
+    btnNovoFilme.addEventListener("click", function() {
+        ficha.style.display = "none";
+        mensagemFilme.textContent = "";
+        fichaNovoFilme.style.display = "flex";
+    });
 
-fecharNovoFilme.addEventListener("click", function() {
-    fichaNovoFilme.style.display = "none";
-});
+    fecharNovoFilme.addEventListener("click", function() {
+        fichaNovoFilme.style.display = "none";
+    });
 
-formNovoFilme.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    mensagemFilme.textContent = "Cadastrando...";
-    mensagemFilme.style.color = "yellow";
+    formNovoFilme.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        mensagemFilme.textContent = "Cadastrando...";
+        mensagemFilme.style.color = "yellow";
 
-    const formData = new FormData(e.target);
-    const corpo = new URLSearchParams(formData);
+        const formData = new FormData(e.target);
+        const corpo = new URLSearchParams(formData);
 
-    try {
-        const resposta = await fetch("api/cadastrar_filme.php", {
-            method: "POST",
-            headers: {"Content-Type": "application/x-www-form-urlencoded"},
-            body: corpo
-        });
+        try {
+            const resposta = await fetch("api/cadastrar_filme.php", {
+                method: "POST",
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: corpo
+            });
 
-        const dados = await resposta.json();
+            const dados = await resposta.json();
 
-        if (!resposta.ok) {
-            mensagemFilme.textContent = dados.erro;
+            if (!resposta.ok) {
+                mensagemFilme.textContent = dados.erro;
+                mensagemFilme.style.color = "#ff6b6b";
+                return;
+            }
+
+            mensagemFilme.textContent = dados.mensagem;
+            mensagemFilme.style.color = "#a8ff60";
+            formNovoFilme.reset();
+            carregarFilmes();
+
+            setTimeout(() => {
+                fichaNovoFilme.style.display = "none";
+                mensagemFilme.textContent = "";
+            }, 1500);
+        } catch (erro) {
+            console.error("Erro:", erro);
+            mensagemFilme.textContent = "Erro de conexão com o servidor";
             mensagemFilme.style.color = "#ff6b6b";
-            return;
         }
-
-        mensagemFilme.textContent = dados.mensagem;
-        mensagemFilme.style.color = "#a8ff60";
-        formNovoFilme.reset();
-        carregarFilmes();
-
-        setTimeout(() => {
-            fichaNovoFilme.style.display = "none";
-            mensagemFilme.textContent = "";
-        }, 1500);
-    } catch (erro) {
-        console.error("Erro:", erro);
-        mensagemFilme.textContent = "Erro de conexão com o servidor";
-        mensagemFilme.style.color = "#ff6b6b";
-    }
-});
+    });
+}
 
 function abrirFicha(filme) {
     ficha.style.display = "flex";
@@ -85,13 +92,100 @@ function abrirFicha(filme) {
     anoEl.textContent = filme.dataset.ano;
     classificacaoEl.textContent = filme.dataset.classificacao;
     classificacaoEl.className = "classificacao-selo selo-" + filme.dataset.classificacao;
+    filmeAtual = filme.dataset.id;
+    mensagemAluguel.textContent = "";
+
+    if (filme.dataset.alugado == "true") {
+        btnAlugar.style.display = "none";
+        btnDevolver.style.display = "inline-block";
+    } else {
+        btnAlugar.style.display = "inline-block";
+        btnDevolver.style.display = "none";
+    }
 };
+
+btnAlugar.addEventListener("click", async () => {
+    mensagemAluguel.textContent = "Alugando...";
+    mensagemAluguel.style.color = "yellow";
+
+    const corpo = new URLSearchParams();
+    corpo.append("filme_id", filmeAtual);
+
+    try {
+        const resposta = await fetch("api/alugar.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: corpo
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            mensagemAluguel.textContent = dados.erro;
+            mensagemAluguel.style.color = "#ff6b6b";
+            return;
+        }
+
+        mensagemAluguel.textContent = dados.mensagem;
+        mensagemAluguel.style.color = "#a8ff60";
+        btnAlugar.style.display = "none";
+        btnDevolver.style.display = "inline-block";
+        carregarFilmes();
+    } catch (erro) {
+        console.error("Erro:", erro);
+        mensagemAluguel.textContent = "Erro de conexão com o servidor";
+        mensagemAluguel.style.color = "#ff6b6b";
+    }
+});
+
+btnDevolver.addEventListener("click", async () => {
+    mensagemAluguel.textContent = "Devolvendo...";
+    mensagemAluguel.style.color = "yellow";
+
+    const corpo = new URLSearchParams();
+    corpo.append("filme_id", filmeAtual);
+
+    try {
+        const resposta = await fetch("api/devolver.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: corpo
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            mensagemAluguel.textContent = dados.erro;
+            mensagemAluguel.style.color = "#ff6b6b";
+            return;
+        }
+
+        mensagemAluguel.textContent = dados.mensagem;
+        mensagemAluguel.style.color = "#a8ff60";
+        carregarFilmes();
+
+        setTimeout(() => {
+            ficha.style.display = "none";
+            mensagemAluguel.textContent = "";
+        }, 1500);
+    } catch (erro) {
+        console.error("Erro:", erro);
+        mensagemAluguel.textContent = "Erro de conexão com o servidor";
+        mensagemAluguel.style.color = "#ff6b6b";
+    }
+});
 
 function mostrarVazio(prateleira) {
     if (prateleira.children.length == 0) {
         let vazio = document.createElement("li");
         vazio.className = "vazio";
-        vazio.textContent = "Nenhum filme cadastrado";
+
+        if (somenteAlugados) {
+            vazio.textContent = "Nenhum filme alugado";
+        } else {
+            vazio.textContent = "Nenhum filme cadastrado";
+        }
+
         prateleira.appendChild(vazio);
     }
 }
@@ -112,9 +206,15 @@ async function carregarFilmes() {
         prateleiraOutros.innerHTML = "";
 
         resultado.dados.forEach(filme => {
+            if (somenteAlugados && !filme.alugado) {
+                return;
+            }
+
             let item = document.createElement("li");
             item.className = "movie";
             item.setAttribute("onclick", "abrirFicha(this)");
+            item.dataset.id = filme.id;
+            item.dataset.alugado = filme.alugado;
             item.dataset.titulo = filme.titulo;
             item.dataset.sinopse = filme.sinopse;
             item.dataset.diretor = filme.diretor;
@@ -133,6 +233,13 @@ async function carregarFilmes() {
             let brilho = document.createElement("div");
             brilho.className = "plastic_shine";
             item.appendChild(brilho);
+
+            if (filme.alugado) {
+                let faixa = document.createElement("div");
+                faixa.className = "faixa-alugado";
+                faixa.textContent = "Alugado";
+                item.appendChild(faixa);
+            }
 
             if (filme.categoria == "Anime") {
                 prateleiraAnime.appendChild(item);

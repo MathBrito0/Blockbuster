@@ -498,6 +498,21 @@ button[type="submit"]:hover {
     background-color: var(--color-yellow-hover);
 }
 
+.faixa-alugado {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 6px 0;
+    background-color: var(--color-yellow);
+    color: var(--bg-primary);
+    font-weight: 900;
+    font-size: 13px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 .btn-fechar {
     background-color: transparent;
     color: var(--text-white);
