@@ -53,13 +53,13 @@ try {
                         <?php if ($filme['categoria'] === 'Anime'): ?>
                         <li class="movie"
                             onclick="abrirFicha(this)"
-                            data-titulo="<? htmlspecialchars($filme['titulo']) ?>"
-                            data-sinopse="<? htmlspecialchars($filme['sinopse']) ?>"
-                            data-diretor="<? htmlspecialchars($filme['diretor']) ?>"
-                            data-elenco="<? htmlspecialchars($filme['elenco']) ?>"
-                            data-classificacao="<? htmlspecialchars($filme['classificacao']) ?>"
-                            data-preco="<? htmlspecialchars($filme['preco']) ?>"
-                            data-lancamento="<? htmlspecialchars($filme['ano']) ?>">
+                            data-titulo="<?= htmlspecialchars($filme['titulo']) ?>"
+                            data-sinopse="<?= htmlspecialchars($filme['sinopse']) ?>"
+                            data-diretor="<?= htmlspecialchars($filme['diretor']) ?>"
+                            data-elenco="<?= htmlspecialchars($filme['elenco']) ?>"
+                            data-classificacao="<?= htmlspecialchars($filme['classificacao']) ?>"
+                            data-preco="<?= htmlspecialchars($filme['preco']) ?>"
+                            data-lancamento="<?= htmlspecialchars($filme['ano']) ?>">
 
                             <img src="img/assets/<?= htmlspecialchars($filme['capa']) ?>" alt="<?= htmlspecialchars($filme['titulo']) ?>">
                             <div class="plastic_shine"></div>
@@ -80,13 +80,13 @@ try {
                         <?php if ($filme['categoria'] === 'Ação'): ?>
                         <li class="movie"
                             onclick="abrirFicha(this)"
-                            data-titulo="<? htmlspecialchars($filme['titulo']) ?>"
-                            data-sinopse="<? htmlspecialchars($filme['sinopse']) ?>"
-                            data-diretor="<? htmlspecialchars($filme['diretor']) ?>"
-                            data-elenco="<? htmlspecialchars($filme['elenco']) ?>"
-                            data-classificacao="<? htmlspecialchars($filme['classificacao']) ?>"
-                            data-preco="<? htmlspecialchars($filme['preco']) ?>"
-                            data-lancamento="<? htmlspecialchars($filme['ano']) ?>">
+                            data-titulo="<?= htmlspecialchars($filme['titulo']) ?>"
+                            data-sinopse="<?= htmlspecialchars($filme['sinopse']) ?>"
+                            data-diretor="<?= htmlspecialchars($filme['diretor']) ?>"
+                            data-elenco="<?= htmlspecialchars($filme['elenco']) ?>"
+                            data-classificacao="<?= htmlspecialchars($filme['classificacao']) ?>"
+                            data-preco="<?= htmlspecialchars($filme['preco']) ?>"
+                            data-lancamento="<?= htmlspecialchars($filme['ano']) ?>">
 
                             <img src="img/assets/<?= htmlspecialchars($filme['capa']) ?>" alt="<?= htmlspecialchars($filme['titulo']) ?>">
                             <div class="plastic_shine"></div>
@@ -109,13 +109,13 @@ try {
                         <?php if ($filme['categoria'] === 'Ficção Científica'): ?>
                         <li class="movie"
                             onclick="abrirFicha(this)"
-                            data-titulo="<? htmlspecialchars($filme['titulo']) ?>"
-                            data-sinopse="<? htmlspecialchars($filme['sinopse']) ?>"
-                            data-diretor="<? htmlspecialchars($filme['diretor']) ?>"
-                            data-elenco="<? htmlspecialchars($filme['elenco']) ?>"
-                            data-classificacao="<? htmlspecialchars($filme['classificacao']) ?>"
-                            data-preco="<? htmlspecialchars($filme['preco']) ?>"
-                            data-lancamento="<? htmlspecialchars($filme['ano']) ?>">
+                            data-titulo="<?= htmlspecialchars($filme['titulo']) ?>"
+                            data-sinopse="<?= htmlspecialchars($filme['sinopse']) ?>"
+                            data-diretor="<?= htmlspecialchars($filme['diretor']) ?>"
+                            data-elenco="<?= htmlspecialchars($filme['elenco']) ?>"
+                            data-classificacao="<?= htmlspecialchars($filme['classificacao']) ?>"
+                            data-preco="<?= htmlspecialchars($filme['preco']) ?>"
+                            data-lancamento="<?= htmlspecialchars($filme['ano']) ?>">
 
                             <img src="img/assets/<?= htmlspecialchars($filme['capa']) ?>" alt="<?= htmlspecialchars($filme['titulo']) ?>">
                             <div class="plastic_shine"></div>
@@ -127,7 +127,8 @@ try {
             </section>
         </div>
 
-        
+
+<!-- Preenchendo a ficha do filme com JS -->
         <div class="ficha" id="ficha" style="display: none;">
             <div class="ficha-esquerda">
                 <div class="dvd-case">
