@@ -3,35 +3,98 @@ let ficha = document.getElementById("ficha");
 let titulo = document.getElementById("ficha-titulo");
 let sinopse = document.getElementById("ficha-sinopse");
 let diretorEl = document.getElementById("ficha-diretor");
-let elencoEl = document.getElementById("ficha-elenco");
+let generoEl = document.getElementById("ficha-genero");
+let anoEl = document.getElementById("ficha-ano");
 let classificacaoEl = document.getElementById("ficha-classificacao");
-let precoEl = document.getElementById("ficha-preco");
-let imagemFicha = document.getElementById("ficha-img");
+let capaFicha = document.getElementById("ficha-capa");
+let btnNovoFilme = document.getElementById("btn-novo-filme");
+let fichaNovoFilme = document.getElementById("ficha-novo-filme");
+let fecharNovoFilme = document.getElementById("fechar-novo-filme");
+let formNovoFilme = document.getElementById("form-novo-filme");
+let mensagemFilme = document.getElementById("mensagem-filme");
+let prateleiraAnime = document.getElementById("prateleira-anime");
+let prateleiraAcao = document.getElementById("prateleira-acao");
+let prateleiraFiccao = document.getElementById("prateleira-ficcao");
+let prateleiraOutros = document.getElementById("prateleira-outros");
 
 botao.addEventListener("click", function() {
     ficha.style.display = "none";
+});
+
+btnNovoFilme.addEventListener("click", function() {
+    ficha.style.display = "none";
+    mensagemFilme.textContent = "";
+    fichaNovoFilme.style.display = "flex";
+});
+
+fecharNovoFilme.addEventListener("click", function() {
+    fichaNovoFilme.style.display = "none";
+});
+
+formNovoFilme.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    mensagemFilme.textContent = "Cadastrando...";
+    mensagemFilme.style.color = "yellow";
+
+    const formData = new FormData(e.target);
+    const corpo = new URLSearchParams(formData);
+
+    try {
+        const resposta = await fetch("api/cadastrar_filme.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: corpo
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            mensagemFilme.textContent = dados.erro;
+            mensagemFilme.style.color = "#ff6b6b";
+            return;
+        }
+
+        mensagemFilme.textContent = dados.mensagem;
+        mensagemFilme.style.color = "#a8ff60";
+        formNovoFilme.reset();
+        carregarFilmes();
+
+        setTimeout(() => {
+            fichaNovoFilme.style.display = "none";
+            mensagemFilme.textContent = "";
+        }, 1500);
+    } catch (erro) {
+        console.error("Erro:", erro);
+        mensagemFilme.textContent = "Erro de conexão com o servidor";
+        mensagemFilme.style.color = "#ff6b6b";
+    }
 });
 
 function abrirFicha(filme) {
     ficha.style.display = "flex";
     titulo.textContent = filme.dataset.titulo;
     sinopse.textContent = filme.dataset.sinopse;
-    let caminhoImg = filme.querySelector("img").src;
-    imagemFicha.src = caminhoImg;
-    if (diretorEl) diretorEl.textContent = filme.dataset.diretor || "Não informado";
-    if (elencoEl) elencoEl.textContent = filme.dataset.elenco || "Não informado";
-    if (precoEl) precoEl.textContent = filme.dataset.preco || "R$ 6,90 / 48h";
-    if (classificacaoEl) {
-        let classificacao = filme.dataset.classificacao || "L";
-        classificacaoEl.textContent = classificacao;
-        classificacaoEl.className = "classificacao-selo selo-" + classificacao;
-    }
+    capaFicha.textContent = filme.dataset.titulo;
+    let anoFicha = document.createElement("span");
+    anoFicha.textContent = filme.dataset.ano;
+    capaFicha.appendChild(anoFicha);
+    diretorEl.textContent = filme.dataset.diretor;
+    generoEl.textContent = filme.dataset.genero;
+    anoEl.textContent = filme.dataset.ano;
+    classificacaoEl.textContent = filme.dataset.classificacao;
+    classificacaoEl.className = "classificacao-selo selo-" + filme.dataset.classificacao;
 };
 
+function mostrarVazio(prateleira) {
+    if (prateleira.children.length == 0) {
+        let vazio = document.createElement("li");
+        vazio.className = "vazio";
+        vazio.textContent = "Nenhum filme cadastrado";
+        prateleira.appendChild(vazio);
+    }
+}
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const container = document.getElementById("lista-filmes");
-
+async function carregarFilmes() {
     try {
         const resposta = await fetch("api/filmes.php");
         const resultado = await resposta.json();
@@ -41,35 +104,53 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        // Limpeza do container para montar o 3D
-        container.innerHTML = "";
+        prateleiraAnime.innerHTML = "";
+        prateleiraAcao.innerHTML = "";
+        prateleiraFiccao.innerHTML = "";
+        prateleiraOutros.innerHTML = "";
 
         resultado.dados.forEach(filme => {
-            const dvdCase = document.createElement("div");
-            dvdCase.classList.add("dvd-case");
-            dvdCase.setAttribute("onclick", "abrirFicha(This)");
-            dvdCase.dataset.titulo = filme.titulo;
-            dvdCase.dataset.sinopse = filme.sinopse || "Sinopse não registrada";
-            dvdCase.dataset.diretor = filme.diretor || "Não informado";
-            dvdCase.dataset.elenco = filme.elenco || "Não informado";
-            dvdCase.dataset.classificacao = filme.classificacao || "L";
-            dvdCase.dataset.preco = filme.preco || "R$ 7,90 / 48h";
+            let item = document.createElement("li");
+            item.className = "movie";
+            item.setAttribute("onclick", "abrirFicha(this)");
+            item.dataset.titulo = filme.titulo;
+            item.dataset.sinopse = filme.sinopse;
+            item.dataset.diretor = filme.diretor;
+            item.dataset.genero = filme.genero;
+            item.dataset.ano = filme.ano;
+            item.dataset.classificacao = filme.classificacao;
 
-            dvdCase.innerHTML = `
-                <div class="dvd-cover">
-                    <img src="uploads/${filme.capa}" alt="${filme.titulo}">
-                    <div class="dvd-info">
-                        <h3>${filme.titulo}</h3>
-                        <p>${filme.genero} (${filme.ano})</p>
-                    </div>
-                </div>
-            `;
+            let capa = document.createElement("div");
+            capa.className = "capa-cinza";
+            capa.textContent = filme.titulo;
+            let anoCapa = document.createElement("span");
+            anoCapa.textContent = filme.ano;
+            capa.appendChild(anoCapa);
+            item.appendChild(capa);
 
-            container.appendChild(dvdCase);
+            let brilho = document.createElement("div");
+            brilho.className = "plastic_shine";
+            item.appendChild(brilho);
+
+            if (filme.categoria == "Anime") {
+                prateleiraAnime.appendChild(item);
+            } else if (filme.categoria == "Ação") {
+                prateleiraAcao.appendChild(item);
+            } else if (filme.categoria == "Ficção Científica") {
+                prateleiraFiccao.appendChild(item);
+            } else {
+                prateleiraOutros.appendChild(item);
+            }
         });
-    
+
+        mostrarVazio(prateleiraAnime);
+        mostrarVazio(prateleiraAcao);
+        mostrarVazio(prateleiraFiccao);
+        mostrarVazio(prateleiraOutros);
+
     } catch (erro) {
         console.error("Erro de conexão ao carregar o catálogo:", erro);
-
     }
-});
+}
+
+document.addEventListener("DOMContentLoaded", carregarFilmes);
