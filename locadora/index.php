@@ -35,39 +35,18 @@ try {
 
         <nav class="navbar">
             <a href="index.php" class="logo">Blockbuster</a>
+            <button id="btn-novo-filme" class="btn-navbar">Cadastrar Novo Filme</button>
             <div class="user-info">
                 <span>Bem-vindo ao nosso site Blockbuster</span>
-                <a href="api/sair.php" class="btn-sair">Sair</a>
+                <a href="api/sair.php" class="btn-navbar">Sair</a>
             </div>
         </nav>
 
         <div class="catalogo-container">
 
-
-<!-- PRATELEIRA DOS FILMES DA CATEGORIA 'ANIME' -->
-
             <section class="prateleira">
                 <h2 class="tag">Anime</h2>
-                <ul class="list">
-                    <?php foreach ($filmes as $filme): ?>
-                        <?php if ($filme['categoria'] === 'Anime'): ?>
-                        <li class="movie"
-                            onclick="abrirFicha(this)"
-                            data-titulo="<?= htmlspecialchars($filme['titulo']) ?>"
-                            data-sinopse="<?= htmlspecialchars($filme['sinopse']) ?>"
-                            data-diretor="<?= htmlspecialchars($filme['diretor']) ?>"
-                            data-elenco="<?= htmlspecialchars($filme['elenco']) ?>"
-                            data-classificacao="<?= htmlspecialchars($filme['classificacao']) ?>"
-                            data-preco="<?= htmlspecialchars($filme['preco']) ?>"
-                            data-lancamento="<?= htmlspecialchars($filme['ano']) ?>">
-
-                            <img src="img/assets/<?= htmlspecialchars($filme['capa']) ?>" alt="<?= htmlspecialchars($filme['titulo']) ?>">
-                            <div class="plastic_shine"></div>
-                        
-                        </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
+                <ul class="list" id="prateleira-anime"></ul>
             </section>
 
 
@@ -75,26 +54,7 @@ try {
 <!-- PRATELEIRA DOS FILMES DA CATEGORIA 'AÇÃO' -->
             <section class="prateleira">
                 <h2 class="tag">Ação</h2>
-                <ul class="list">
-                    <?php foreach ($filmes as $filme): ?>
-                        <?php if ($filme['categoria'] === 'Ação'): ?>
-                        <li class="movie"
-                            onclick="abrirFicha(this)"
-                            data-titulo="<?= htmlspecialchars($filme['titulo']) ?>"
-                            data-sinopse="<?= htmlspecialchars($filme['sinopse']) ?>"
-                            data-diretor="<?= htmlspecialchars($filme['diretor']) ?>"
-                            data-elenco="<?= htmlspecialchars($filme['elenco']) ?>"
-                            data-classificacao="<?= htmlspecialchars($filme['classificacao']) ?>"
-                            data-preco="<?= htmlspecialchars($filme['preco']) ?>"
-                            data-lancamento="<?= htmlspecialchars($filme['ano']) ?>">
-
-                            <img src="img/assets/<?= htmlspecialchars($filme['capa']) ?>" alt="<?= htmlspecialchars($filme['titulo']) ?>">
-                            <div class="plastic_shine"></div>
-                        
-                        </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
+                <ul class="list" id="prateleira-acao"></ul>
             </section>
 
 
@@ -104,26 +64,12 @@ try {
 <!-- PRATELEIRA DOS FILMES DA CATEGORIA 'FICÇÃO CIENTÍFICA' -->
             <section class="prateleira">
                 <h2 class="tag">Ficção Científica</h2>
-                <ul class="list">
-                    <?php foreach ($filmes as $filme): ?>
-                        <?php if ($filme['categoria'] === 'Ficção Científica'): ?>
-                        <li class="movie"
-                            onclick="abrirFicha(this)"
-                            data-titulo="<?= htmlspecialchars($filme['titulo']) ?>"
-                            data-sinopse="<?= htmlspecialchars($filme['sinopse']) ?>"
-                            data-diretor="<?= htmlspecialchars($filme['diretor']) ?>"
-                            data-elenco="<?= htmlspecialchars($filme['elenco']) ?>"
-                            data-classificacao="<?= htmlspecialchars($filme['classificacao']) ?>"
-                            data-preco="<?= htmlspecialchars($filme['preco']) ?>"
-                            data-lancamento="<?= htmlspecialchars($filme['ano']) ?>">
+                <ul class="list" id="prateleira-ficcao"></ul>
+            </section>
 
-                            <img src="img/assets/<?= htmlspecialchars($filme['capa']) ?>" alt="<?= htmlspecialchars($filme['titulo']) ?>">
-                            <div class="plastic_shine"></div>
-                        
-                        </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
+            <section class="prateleira">
+                <h2 class="tag">Outros</h2>
+                <ul class="list" id="prateleira-outros"></ul>
             </section>
         </div>
 
@@ -132,7 +78,7 @@ try {
         <div class="ficha" id="ficha" style="display: none;">
             <div class="ficha-esquerda">
                 <div class="dvd-case">
-                    <img id="ficha-img" src=""/>
+                    <div id="ficha-capa" class="capa-cinza"></div>
                     <div class="plastic_shine"></div>
                 </div>
             </div>
@@ -147,12 +93,12 @@ try {
                 
                 <div class="ficha-detalhes">
                     <p><strong>DIRETOR:</strong> <span id="ficha-diretor">-</span></p>
-                    <p><strong>ELENCO:</strong> <span id="ficha-elenco">-</span></p>
-                    <p><strong>ANO:</strong> <span id="ficha-lancamento">-</span></p>
+                    <p><strong>GÊNERO:</strong> <span id="ficha-genero">-</span></p>
+                    <p><strong>ANO:</strong> <span id="ficha-ano">-</span></p>
                 </div>
 
                 <div class="ficha-rodape">
-                    <div class="preco-etiqueta" id="ficha_preco">R$ 7,90 / 48h</div>
+                    <div class="preco-etiqueta">R$ 7,90 / 48h</div>
                     <div class="ficha-botoes">
                         <button class="btn-alugar">Alugar</button>
                         <button id="botao" class="btn-fechar">Fechar</button>
@@ -161,6 +107,69 @@ try {
             </div>
         </div>
 
+        <div class="ficha ficha-form" id="ficha-novo-filme">
+            <div class="ficha-direita">
+                <div class="ficha-cabecalho">
+                    <h2>Cadastrar Novo Filme</h2>
+                    <button type="button" id="fechar-novo-filme" class="btn-fechar">Fechar</button>
+                </div>
+
+                <form id="form-novo-filme">
+                    <div class="campo">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="diretor">Diretor</label>
+                        <input type="text" id="diretor" name="diretor" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="genero">Gênero</label>
+                        <input type="text" id="genero" name="genero" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" name="categoria" required>
+                            <option value="" disabled selected>Selecione uma categoria</option>
+                            <option value="Anime">Anime</option>
+                            <option value="Ação">Ação</option>
+                            <option value="Ficção Científica">Ficção Científica</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="ano">Ano</label>
+                        <input type="number" id="ano" name="ano" min="1888" max="2100" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="classificacao">Classificação</label>
+                        <select id="classificacao" name="classificacao" required>
+                            <option value="" disabled selected>Selecione a classificação</option>
+                            <option value="L">L</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="sinopse">Sinopse</label>
+                        <textarea id="sinopse" name="sinopse" rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+
+                <p class="mensagem" id="mensagem-filme"></p>
+            </div>
+        </div>
         <script src="script.js"></script>
     </body>
 </html>
