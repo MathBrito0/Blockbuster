@@ -22,6 +22,7 @@ if (!isset($_SESSION['usuario_id'])) {
             <button id="btn-novo-filme" class="btn-navbar">Cadastrar Novo Filme</button>
             <div class="user-info">
                 <span>Bem-vindo ao nosso site Blockbuster</span>
+                <a href="alugados.php" class="btn-navbar">Meus Filmes</a>
                 <a href="api/sair.php" class="btn-navbar">Sair</a>
             </div>
         </nav>
@@ -76,10 +77,13 @@ if (!isset($_SESSION['usuario_id'])) {
                 <div class="ficha-rodape">
                     <div class="preco-etiqueta">R$ 7,90 / 48h</div>
                     <div class="ficha-botoes">
-                        <button class="btn-alugar">Alugar</button>
+                        <button id="btn-alugar" class="btn-alugar">Alugar</button>
+                        <button id="btn-devolver" class="btn-fechar">Devolver</button>
                         <button id="botao" class="btn-fechar">Fechar</button>
                     </div>
                 </div>
+
+                <p class="mensagem" id="mensagem-aluguel"></p>
             </div>
         </div>
 
