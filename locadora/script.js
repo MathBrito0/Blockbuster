@@ -15,7 +15,10 @@ let mensagemFilme = document.getElementById("mensagem-filme");
 let prateleiraAnime = document.getElementById("prateleira-anime");
 let prateleiraAcao = document.getElementById("prateleira-acao");
 let prateleiraFiccao = document.getElementById("prateleira-ficcao");
-let prateleiraOutros = document.getElementById("prateleira-outros");
+let prateleiraAnimacao = document.getElementById("prateleira-animacao");
+let prateleiraComedia = document.getElementById("prateleira-comedia");
+let prateleiraTerror = document.getElementById("prateleira-terror");
+let prateleiraDrama = document.getElementById("prateleira-drama");
 let btnAlugar = document.getElementById("btn-alugar");
 let btnDevolver = document.getElementById("btn-devolver");
 let mensagemAluguel = document.getElementById("mensagem-aluguel");
@@ -83,10 +86,23 @@ function abrirFicha(filme) {
     ficha.style.display = "flex";
     titulo.textContent = filme.dataset.titulo;
     sinopse.textContent = filme.dataset.sinopse;
-    capaFicha.textContent = filme.dataset.titulo;
-    let anoFicha = document.createElement("span");
-    anoFicha.textContent = filme.dataset.ano;
-    capaFicha.appendChild(anoFicha);
+    capaFicha.innerHTML = "";
+
+    if (filme.dataset.capa && filme.dataset.capa.trim() !== "") {
+        capaFicha.style.backgroundImage = `url('img/assets/${filme.dataset.capa.trim()}')`;
+        capaFicha.style.backgroundSize = "cover";
+        capaFicha.style.backgroundPosition = "center";
+        capaFicha.style.backgroundRepeat = "no-repeat";
+   
+    } else {
+        capaFicha.style.backgroundImage = "none";
+        capaFicha.textContent = filme.dataset.titulo;
+        let anoFicha = document.createElement("span");
+        anoFicha.textContent = filme.dataset.ano;
+        capaFicha.appendChild(anoFicha);
+    }
+
+
     diretorEl.textContent = filme.dataset.diretor;
     generoEl.textContent = filme.dataset.genero;
     anoEl.textContent = filme.dataset.ano;
@@ -203,7 +219,10 @@ async function carregarFilmes() {
         prateleiraAnime.innerHTML = "";
         prateleiraAcao.innerHTML = "";
         prateleiraFiccao.innerHTML = "";
-        prateleiraOutros.innerHTML = "";
+        prateleiraAnimacao.innerHTML = "";
+        prateleiraComedia.innerHTML = "";
+        prateleiraTerror.innerHTML = "";
+        prateleiraDrama.innerHTML = "";
 
         resultado.dados.forEach(filme => {
             if (somenteAlugados && !filme.alugado) {
@@ -221,13 +240,24 @@ async function carregarFilmes() {
             item.dataset.genero = filme.genero;
             item.dataset.ano = filme.ano;
             item.dataset.classificacao = filme.classificacao;
+            item.dataset.capa = filme.capa;
 
             let capa = document.createElement("div");
             capa.className = "capa-cinza";
-            capa.textContent = filme.titulo;
+            
+            console.log("Título", filme.titulo, "| Capa no banco:", filme.capa);
+            if (filme.capa && filme.capa.trim() !== "") {
+                capa.style.backgroundImage = `url('img/assets/${filme.capa.trim()}')`;
+                capa.style.backgroundSize = "cover";
+                capa.style.backgroundPosition = "center";
+            
+            } else {
+                capa.textContent = filme.titulo;
             let anoCapa = document.createElement("span");
             anoCapa.textContent = filme.ano;
             capa.appendChild(anoCapa);
+            }
+            
             item.appendChild(capa);
 
             let brilho = document.createElement("div");
@@ -247,15 +277,24 @@ async function carregarFilmes() {
                 prateleiraAcao.appendChild(item);
             } else if (filme.categoria == "Ficção Científica") {
                 prateleiraFiccao.appendChild(item);
+            } else if (filme.categoria == "Animação") {
+                prateleiraAnimacao.appendChild(item);
+            } else if (filme.categoria == "Comédia") {
+                prateleiraComedia.appendChild(item);
+            } else if (filme.categoria == "Terror") {
+                prateleiraTerror.appendChild(item);
             } else {
-                prateleiraOutros.appendChild(item);
-            }
+                prateleiraDrama.appendChild(item);
+            } 
         });
 
         mostrarVazio(prateleiraAnime);
         mostrarVazio(prateleiraAcao);
         mostrarVazio(prateleiraFiccao);
-        mostrarVazio(prateleiraOutros);
+        mostrarVazio(prateleiraAnimacao);
+        mostrarVazio(prateleiraComedia);
+        mostrarVazio(prateleiraTerror);
+        mostrarVazio(prateleiraDrama);
 
     } catch (erro) {
         console.error("Erro de conexão ao carregar o catálogo:", erro);

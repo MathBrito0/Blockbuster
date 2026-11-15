@@ -2,6 +2,8 @@
 session_start();
 require_once 'api/backend.php';     //Conecta com o banco
 
+$funcionario = isset($_SESSION['funcionario']) && $_SESSION['funcionario'] === true;
+
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: login.html');
 
@@ -35,7 +37,9 @@ try {
 
         <nav class="navbar">
             <a href="index.php" class="logo">Blockbuster</a>
-            <button id="btn-novo-filme" class="btn-navbar">Cadastrar Novo Filme</button>
+            <?php if ($funcionario): ?>
+                <button id="btn-novo-filme" class="btn-navbar">Cadastrar Novo Filme</button>
+            <?php endif; ?>
             <div class="user-info">
                 <span>Bem-vindo ao nosso site Blockbuster</span>
                 <a href="alugados.php" class="btn-navbar">Meus Filmes</a>
@@ -45,6 +49,8 @@ try {
 
         <div class="catalogo-container">
 
+
+<!-- PRATELEIRA DOS FILMES DA CATEGORIA 'ANIME' -->
             <section class="prateleira">
                 <h2 class="tag">Anime</h2>
                 <ul class="list" id="prateleira-anime"></ul>
@@ -60,17 +66,42 @@ try {
 
 
 
-
-
 <!-- PRATELEIRA DOS FILMES DA CATEGORIA 'FICÇÃO CIENTÍFICA' -->
             <section class="prateleira">
                 <h2 class="tag">Ficção Científica</h2>
                 <ul class="list" id="prateleira-ficcao"></ul>
             </section>
 
+
+
+<!-- PRATELEIRA DOS FILMES DA CATEGORIA 'ANIMAÇÃO' -->
             <section class="prateleira">
-                <h2 class="tag">Outros</h2>
-                <ul class="list" id="prateleira-outros"></ul>
+                <h2 class="tag">Animação</h2>
+                <ul class="list" id="prateleira-animacao"></ul>
+            </section>
+
+
+
+<!-- PRATELEIRA DOS FILMES DA CATEGORIA 'COMÉDIA' -->
+            <section class="prateleira">
+                <h2 class="tag">Comédia</h2>
+                <ul class="list" id="prateleira-comedia"></ul>
+            </section>
+
+
+
+<!-- PRATELEIRA DOS FILMES DA CATEGORIA 'TERROR' -->
+            <section class="prateleira">
+                <h2 class="tag">Terror</h2>
+                <ul class="list" id="prateleira-terror"></ul>
+            </section>
+
+
+            
+<!-- PRATELEIRA DOS FILMES DA CATEGORIA 'DRAMA' -->
+            <section class="prateleira">
+                <h2 class="tag">Drama</h2>
+                <ul class="list" id="prateleira-drama"></ul>
             </section>
         </div>
 

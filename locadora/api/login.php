@@ -73,6 +73,15 @@ if (password_verify($senha_pepper, $usuario['senha'])) {
     $_SESSION['usuario_id'] = $usuario['id'];
     $_SESSION['usuario_nome'] = $usuario['nome'];
 
+    
+    // Criando a tag de funcionário
+    if (isset($usuario['tipo']) && $usuario['tipo'] === 'funcionario') {
+        $_SESSION['funcionario'] = true;
+
+    } else {
+        $_SESSION['funcionario'] = false;
+    }
+
     http_response_code(200);
     echo json_encode(['sucesso' => true, 'mensagem' => 'Login realizado com sucesso']);
 

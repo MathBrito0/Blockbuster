@@ -5,6 +5,12 @@ header('Content-Type: application/json; charset=utf-8');
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 require_once 'backend.php';
+if (!isset($_SESSION['funcionario']) || $_SESSION['funcionario'] !== true) {
+    
+    http_response_code(403);
+    echo json_encode(['erro' => 'Acesso restrito a funcionários']);
+    exit;
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
