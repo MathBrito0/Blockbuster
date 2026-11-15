@@ -16,7 +16,7 @@ if (!isset($_SESSION['usuario_id'])) {
 try {
 
     $stmt = $pdo->query("SELECT * FROM filmes ORDER BY id DESC");
-    $filmes = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    $filmes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($filmes as $i => $filme) {
 

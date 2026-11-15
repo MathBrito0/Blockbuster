@@ -3,8 +3,7 @@ let ficha = document.getElementById("ficha");
 let titulo = document.getElementById("ficha-titulo");
 let sinopse = document.getElementById("ficha-sinopse");
 let diretorEl = document.getElementById("ficha-diretor");
-let generoEl = document.getElementById("ficha-genero");
-let anoEl = document.getElementById("ficha-ano");
+let elencoEl = document.getElementById("ficha-elenco");
 let classificacaoEl = document.getElementById("ficha-classificacao");
 let capaFicha = document.getElementById("ficha-capa");
 let btnNovoFilme = document.getElementById("btn-novo-filme");
@@ -22,9 +21,11 @@ let mensagemAluguel = document.getElementById("mensagem-aluguel");
 let somenteAlugados = document.body.classList.contains("pagina-alugados");
 let filmeAtual = "";
 
-botao.addEventListener("click", function() {
-    ficha.style.display = "none";
-});
+if (botao) {
+    botao.addEventListener("click", function() {
+        if (ficha) ficha.style.display = "none";
+    });
+}
 
 if (btnNovoFilme) {
     btnNovoFilme.addEventListener("click", function() {
@@ -259,5 +260,3 @@ async function carregarFilmes() {
         console.error("Erro de conexão ao carregar o catálogo:", erro);
     }
 }
-
-document.addEventListener("DOMContentLoaded", carregarFilmes);
