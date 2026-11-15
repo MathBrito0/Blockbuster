@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 0);
 require_once 'backend.php';
 
-
 try {
 
     $stmt = $pdo->query("SELECT * FROM filmes ORDER BY id DESC");

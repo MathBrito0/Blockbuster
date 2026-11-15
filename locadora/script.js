@@ -9,75 +9,32 @@ let precoEl = document.getElementById("ficha-preco");
 let lancamentoEl = document.getElementById("ficha-lancamento");
 let imagemFicha = document.getElementById("ficha-img");
 
-botao.addEventListener("click", function() {
-    ficha.style.display = "none";
-});
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-    const container = document.getElementById("lista-filmes");
-
-    try {
-        const resposta = await fetch("api/filmes.php");
-        const resultado = await resposta.json();
-
-        if (!resposta.ok) {
-            console.error("Erro ao buscar filmes:", resultado.erro);
-            return;
-        }
-
-        // Limpeza do container para montar o 3D
-        container.innerHTML = "";
-
-        resultado.dados.forEach(filme => {
-            const dvdCase = document.createElement("div");
-            dvdCase.classList.add("dvd-case");
-            dvdCase.setAttribute("onclick", "abrirFicha(this)");
-            
-            dvdCase.dataset.titulo = filme.titulo || "Título indisponível";
-            dvdCase.dataset.sinopse = filme.sinopse || "Sinopse não registrada";
-            dvdCase.dataset.diretor = filme.diretor || "Não informado";
-            dvdCase.dataset.elenco = filme.elenco || "Não informado";
-            dvdCase.dataset.classificacao = filme.classificacao || "L";
-            dvdCase.dataset.preco = filme.preco || "R$ 7,90 / 48h";
-            dvdCase.dataset.lancamento = filme.ano || filme.lancamento|| "Não informado";
-
-            dvdCase.innerHTML = `
-                <div class="dvd-cover">
-                    <img src="img/assets/${filme.capa}" alt="${filme.titulo}">
-                    <div class="dvd-info">
-                        <h3>${filme.titulo}</h3>
-                        <p>${filme.genero || ""} (${filme.ano || ""})</p>
-                    </div>
-                </div>
-            `;
-
-            container.appendChild(dvdCase);
-        });;
-    
-    } catch (erro) {
-        console.error("Erro de conexão ao carregar o catálogo:", erro);
-
-    }
-});
+if (botao) {
+    botao.addEventListener("click", function() {
+        if (ficha) ficha.style.display = "none";
+    });
+}
 
 function abrirFicha(filmeElemento) {
+    if (!ficha) return;
     ficha.style.display = "flex";
     
-    titulo.textContent = filmeElemento.dataset.titulo;
-    sinopse.textContent = filmeElemento.dataset.sinopse;
+    if (titulo) titulo.textContent = filmeElemento.dataset.titulo || "";
+    if (sinopse) sinopse.textContent = filmeElemento.dataset.sinopse || "";
     
-    let caminhoImg = filmeElemento.querySelector("img").src;
-    imagemFicha.src = caminhoImg;
+    let imgTag = filmeElemento.querySelector("img");
+    if (imagemFicha && imgTag) {
+        imagemFicha.src = imgTag.src;
+    }
     
-    if (diretorEl) diretorEl.textContent = filmeElemento.dataset.diretor;
-    if (elencoEl) elencoEl.textContent = filmeElemento.dataset.elenco;
-    if (precoEl) precoEl.textContent = filmeElemento.dataset.preco;
-    if (lancamentoEl) lancamentoEl.textContent = filmeElemento.dataset.lancamento;
+    if (diretorEl) diretorEl.textContent = filmeElemento.dataset.diretor || "Não informado";
+    if (elencoEl) elencoEl.textContent = filmeElemento.dataset.elenco || "Não informado";
+    if (precoEl) precoEl.textContent = filmeElemento.dataset.preco || "R$ 7,90 / 48h";
+    if (lancamentoEl) lancamentoEl.textContent = filmeElemento.dataset.lancamento || "Não informado";
     
     if (classificacaoEl) {
         let classificacao = filmeElemento.dataset.classificacao || "L";
         classificacaoEl.textContent = classificacao;
         classificacaoEl.className = "classificacao-selo selo-" + classificacao;
     }
-};
+}

@@ -17,7 +17,7 @@ if (!isset($_SESSION['usuario_id'])) {
     <body>
         
         <nav class="navbar">
-            <a href="index.html" class="logo">Blockbuster</a>
+            <a href="index.php" class="logo">Blockbuster</a>
             <div class="user-info">
                 <span>Bem-vindo ao nosso site Blockbuster</span>
                 <a href="api/sair.php" class="btn-sair">Sair</a>
@@ -144,7 +144,7 @@ if (!isset($_SESSION['usuario_id'])) {
                         data-sinopse="Segue um jovem chamado Takaki através de sua vida enquanto invernos rigorosos, tecnologia fria e finalmente as obrigações e responsabilidades dos adultos convergem para testar as delicadas pétalas do amor."
                         data-diretor="Makoto Shinkai" 
                         data-elenco="Kenji Mizuhashi, Satomi Hanamura" 
-                        data-classificacao="12"
+                        data-classificacao="L"
                         data-preco="R$ 6,90 / 48h"
                         data-lancamento="2007">
                         <img src="img/assets/segundo.jpg" alt="5 Centimeters Per Second">
@@ -387,7 +387,7 @@ if (!isset($_SESSION['usuario_id'])) {
                         data-classificacao="14"
                         data-preco="R$ 9,90 / 48h"
                         data-lancamento="1991">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTg89b6SqqTWNRVwUxLuka44DZp9yQOkdrMjt8BW6cs2w&s=10" alt="O Exterminador do Futuro 2: O Julgamento Final">
+                        <img src="img/assets/terminator.jpg" alt="O Exterminador do Futuro 2">
                         <div class="plastic_shine"></div>
                     </li>
                     <li class="movie" 
@@ -399,7 +399,7 @@ if (!isset($_SESSION['usuario_id'])) {
                         data-classificacao="12"
                         data-preco="R$ 8,90 / 48h"
                         data-lancamento="2002">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh3dgi97RteEUA-6RtKl1787H1ervD_cEUJyW4yHYVKA&s=10" alt="Homem-Aranha (Sam Raimi)">
+                        <img src="img/assets/miranha.jpg" alt="Homem-Aranha">
                         <div class="plastic_shine"></div>
                     </li>
                     <li class="movie" 
@@ -411,7 +411,7 @@ if (!isset($_SESSION['usuario_id'])) {
                         data-classificacao="12"
                         data-preco="R$ 9,90 / 48h"
                         data-lancamento="2009">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-FhonmGA35-Qx8CNrC4Q9ALHD4ov0NpHuvhtTJ1DX5g&s=10" alt="Avatar">
+                        <img src="img/assets/avatar.jpg" alt="Avatar">
                         <div class="plastic_shine"></div>
                     </li>
                     <li class="movie" 
@@ -423,7 +423,7 @@ if (!isset($_SESSION['usuario_id'])) {
                         data-classificacao="14"
                         data-preco="R$ 7,90 / 48h"
                         data-lancamento="1983">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6oasPaNN9qNjGEClqvep0xwa2cBZwbmsBwfNwck_GVw&s=10" alt="Twilight Zone">
+                        <img src="img/assets/twilightzone.jpg" alt="Twilight Zone">
                         <div class="plastic_shine"></div>
                     </li>
                     <li class="movie" 
@@ -435,7 +435,7 @@ if (!isset($_SESSION['usuario_id'])) {
                         data-classificacao="12"
                         data-preco="R$ 9,90 / 48h"
                         data-lancamento="2026">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS34CltVd8Gr21BGM5yXb3BGaPe566GvqeEDE-tR7qzQQ&s=10" alt="Project Hail Mary">
+                        <img src="img/assets/devoradoresdeestrelas.jpg" alt="Project Hail Mary">
                         <div class="plastic_shine"></div>
                     </li>
                 </ul>
@@ -443,10 +443,10 @@ if (!isset($_SESSION['usuario_id'])) {
 
         </div>
 
-        <div class="ficha" id="ficha">
+        <div class="ficha" id="ficha" style="display: none;">
             <div class="ficha-esquerda">
                 <div class="dvd-case">
-                    <img id="ficha-img" src=""/>
+                    <img id="ficha-img" src="" alt="Capa"/>
                     <div class="plastic_shine"></div>
                 </div>
             </div>
@@ -462,11 +462,11 @@ if (!isset($_SESSION['usuario_id'])) {
                 <div class="ficha-detalhes">
                     <p><strong>DIRETOR:</strong> <span id="ficha-diretor">-</span></p>
                     <p><strong>ELENCO:</strong> <span id="ficha-elenco">-</span></p>
-                    <p><strong>ANO:</strong> <span id="ficha-lancamento">-</span></p>
+                    <p><strong>LANÇAMENTO:</strong> <span id="ficha-lancamento">-</span></p>
                 </div>
 
                 <div class="ficha-rodape">
-                    <div class="preco-etiqueta" id="ficha_preco">R$ 7,90 / 48h</div>
+                    <div class="preco-etiqueta" id="ficha-preco">R$ 7,90 / 48h</div>
                     <div class="ficha-botoes">
                         <button class="btn-alugar">Alugar</button>
                         <button id="botao" class="btn-fechar">Fechar</button>
