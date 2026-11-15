@@ -6,27 +6,12 @@ let diretorEl = document.getElementById("ficha-diretor");
 let elencoEl = document.getElementById("ficha-elenco");
 let classificacaoEl = document.getElementById("ficha-classificacao");
 let precoEl = document.getElementById("ficha-preco");
+let lancamentoEl = document.getElementById("ficha-lancamento");
 let imagemFicha = document.getElementById("ficha-img");
 
 botao.addEventListener("click", function() {
     ficha.style.display = "none";
 });
-
-function abrirFicha(filme) {
-    ficha.style.display = "flex";
-    titulo.textContent = filme.dataset.titulo;
-    sinopse.textContent = filme.dataset.sinopse;
-    let caminhoImg = filme.querySelector("img").src;
-    imagemFicha.src = caminhoImg;
-    if (diretorEl) diretorEl.textContent = filme.dataset.diretor || "Não informado";
-    if (elencoEl) elencoEl.textContent = filme.dataset.elenco || "Não informado";
-    if (precoEl) precoEl.textContent = filme.dataset.preco || "R$ 6,90 / 48h";
-    if (classificacaoEl) {
-        let classificacao = filme.dataset.classificacao || "L";
-        classificacaoEl.textContent = classificacao;
-        classificacaoEl.className = "classificacao-selo selo-" + classificacao;
-    }
-};
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -47,29 +32,52 @@ document.addEventListener("DOMContentLoaded", async () => {
         resultado.dados.forEach(filme => {
             const dvdCase = document.createElement("div");
             dvdCase.classList.add("dvd-case");
-            dvdCase.setAttribute("onclick", "abrirFicha(This)");
-            dvdCase.dataset.titulo = filme.titulo;
+            dvdCase.setAttribute("onclick", "abrirFicha(this)");
+            
+            dvdCase.dataset.titulo = filme.titulo || "Título indisponível";
             dvdCase.dataset.sinopse = filme.sinopse || "Sinopse não registrada";
             dvdCase.dataset.diretor = filme.diretor || "Não informado";
             dvdCase.dataset.elenco = filme.elenco || "Não informado";
             dvdCase.dataset.classificacao = filme.classificacao || "L";
             dvdCase.dataset.preco = filme.preco || "R$ 7,90 / 48h";
+            dvdCase.dataset.lancamento = filme.ano || filme.lancamento|| "Não informado";
 
             dvdCase.innerHTML = `
                 <div class="dvd-cover">
-                    <img src="uploads/${filme.capa}" alt="${filme.titulo}">
+                    <img src="img/assets/${filme.capa}" alt="${filme.titulo}">
                     <div class="dvd-info">
                         <h3>${filme.titulo}</h3>
-                        <p>${filme.genero} (${filme.ano})</p>
+                        <p>${filme.genero || ""} (${filme.ano || ""})</p>
                     </div>
                 </div>
             `;
 
             container.appendChild(dvdCase);
-        });
+        });;
     
     } catch (erro) {
         console.error("Erro de conexão ao carregar o catálogo:", erro);
 
     }
 });
+
+function abrirFicha(filmeElemento) {
+    ficha.style.display = "flex";
+    
+    titulo.textContent = filmeElemento.dataset.titulo;
+    sinopse.textContent = filmeElemento.dataset.sinopse;
+    
+    let caminhoImg = filmeElemento.querySelector("img").src;
+    imagemFicha.src = caminhoImg;
+    
+    if (diretorEl) diretorEl.textContent = filmeElemento.dataset.diretor;
+    if (elencoEl) elencoEl.textContent = filmeElemento.dataset.elenco;
+    if (precoEl) precoEl.textContent = filmeElemento.dataset.preco;
+    if (lancamentoEl) lancamentoEl.textContent = filmeElemento.dataset.lancamento;
+    
+    if (classificacaoEl) {
+        let classificacao = filmeElemento.dataset.classificacao || "L";
+        classificacaoEl.textContent = classificacao;
+        classificacaoEl.className = "classificacao-selo selo-" + classificacao;
+    }
+};
