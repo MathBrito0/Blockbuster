@@ -1,0 +1,41 @@
+name: VALIDAÇÃO CI - BLOCKBUSTER
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches:[ main, master ] 
+
+jobs:
+  validar-projeto:
+    run-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: blockbuster_db
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+      steps:
+        - name: 1. Baixar código do repositório
+          uses: actions/checkout@v4
+
+        - name: 2. Configurar PHP 8.2 com PDO MySQL
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: '8.2'
+            extensions: pdo, pdo_mysql
+
+
+        - name: 3. Verificar sintaxe de todos os arquivos PHP
+          run: find . -name "*.php" -exec php -l {} \;command: 
+
+
+        - name: 4. Testar importação do banco.sql
+          run: |
+            mysql -h 127.0.0.1 -u root -proot blockbuster_db < banco.sql
+            mysql -h 127.0.0.1 -u root -proot -e "USE blockbuster_db; SELECT COUNT(*) AS total_filmes FROM filmes;"
