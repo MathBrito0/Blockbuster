@@ -21,6 +21,11 @@ let prateleiraTerror = document.getElementById("prateleira-terror");
 let prateleiraDrama = document.getElementById("prateleira-drama");
 let btnAlugar = document.getElementById("btn-alugar");
 let btnDevolver = document.getElementById("btn-devolver");
+let btnDevTodos = document.getElementById("btn-devolver-todos");
+let fichaDevTodos = document.getElementById("ficha-devolver-todos");
+let confirmarDevTodos = document.getElementById("confirmar-devolver-todos");
+let cancelarDevTodos = document.getElementById("cancelar-devolver-todos");
+let mensagemDevTodos = document.getElementById("mensagem-devolver-todos");
 let mensagemAluguel = document.getElementById("mensagem-aluguel");
 let somenteAlugados = document.body.classList.contains("pagina-alugados");
 let filmeAtual = "";
@@ -300,5 +305,80 @@ async function carregarFilmes() {
         console.error("Erro de conexão ao carregar o catálogo:", erro);
     }
 }
+
+
+if (btnDevTodos && fichaDevTodos) {
+
+    btnDevTodos.addEventListener("click", () => {
+
+        if (ficha) ficha.style.display = "none";
+        if (fichaNovoFilme) fichaNovoFilme.style.display = "none";
+        mensagemDevTodos.textContent = "";
+        confirmarDevTodos.disabled = false;
+        fichaDevTodos.style.display = "flex";
+    });
+
+
+    cancelarDevTodos.addEventListener("click", () => {
+        fichaDevTodos.style.display = "none";
+    });
+
+
+    confirmarDevTodos.addEventListener("click", async () => {
+        mensagemDevTodos.textContent = "Devolvendo os filmes...";
+        mensagemDevTodos.style.color = "yellow";
+        confirmarDevTodos.disabled = true;
+
+        
+        try {
+            const resposta = await fetch("api/devolver_all.php", {
+                method: "POST"
+            });
+
+            const textoResposta = await resposta.text();
+            let dados;
+
+            try {
+                dados = JSON.parse(textoResposta);
+            
+            } catch (e) {
+                console.error("Resposta inválida do servidor:", textoResposta);
+                mensagemDevTodos.textContent = "Erro no servidor";
+                mensagemDevTodos.style.color = "#ff6b6b";
+                confirmarDevTodos.disabled = false;
+
+                return;
+            }
+
+
+
+            if (!resposta.ok) {
+                mensagemDevTodos.textContent = dados.erro || "Erro ao devolver os filmes";
+                mensagemDevTodos.style.color = "#ff6b6b";
+                confirmarDevTodos.disabled = false;
+
+                return;
+            }
+
+            
+            mensagemDevTodos.textContent = dados.mensagem;
+            mensagemDevTodos.style.color = "#a8ff60";
+            carregarFilmes();
+
+            setTimeout(() => {
+                fichaDevTodos.style.display = "none";
+                mensagemDevTodos.textContent = "";
+                confirmarDevTodos.disabled = false;
+            }, 1500);
+
+        } catch (erro) {
+            console.error("Erro:", erro);
+            mensagemDevTodos.textContent = "Erro de conexão com o servidor";
+            mensagemDevTodos.style.color = "#ff6b6b";
+            confirmarDevTodos.disabled = false;
+        }
+    });
+}
+
 
 document.addEventListener("DOMContentLoaded", carregarFilmes);
