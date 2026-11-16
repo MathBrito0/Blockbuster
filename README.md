@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/banner-locadora.png"
+  <img src="./banner-locadora.png"
        alt="Banner do projeto Locadora Digital"
        width="100%">
 </div>
