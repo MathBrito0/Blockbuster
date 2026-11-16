@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main, master ]
   pull_request:
-    branches:[ main, master ] 
+    branches: [ main, master ] 
 
 jobs:
   validar-projeto:
@@ -32,7 +32,7 @@ jobs:
 
 
         - name: 3. Verificar sintaxe de todos os arquivos PHP
-          run: find . -name "*.php" -exec php -l {} \;command: 
+          run: find . -name "*.php" -exec php -l {} \; 
 
 
         - name: 4. Testar importação do banco.sql
