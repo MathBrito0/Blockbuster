@@ -4,7 +4,7 @@
        width="100%">
 </div>
 
-# 🎬 Blockbuster — Locadora Digital
+# 🎬 Locadora Digital
 
 <div align="center">
 
