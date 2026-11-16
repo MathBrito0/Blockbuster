@@ -20,6 +20,8 @@ Plataforma web Full-Stack inspirada na clássica Blockbuster, desenvolvida com P
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
+![CI Status](https://github.com/MathBrito0/Blockbuster/actions/workflows/main.yml/badge.svg)
+
 </div>
 
 ---
