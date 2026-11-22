@@ -54,7 +54,10 @@ Beyond simply presenting a film catalog, the project serves as an application of
 - Browsing via shelves organized by film genre.
 - Access to detailed information for individual films.
 - Display of titles, directors, release years, synopses, and cover art.
-- Visual layout inspired by traditional brick-and-mortar video rental stores. ### ![Section](https://img.shields.io/badge/🔑_Authentication_and_Users-0B1F3A?style=for-the-badge)
+- Visual layout inspired by traditional brick-and-mortar video rental stores.
+
+
+### ![Section](https://img.shields.io/badge/🔑_Authentication_and_Users-0B1F3A?style=for-the-badge)
 
 - Registration of new users.
 - Login and logout with PHP session management.
